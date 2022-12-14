@@ -43,12 +43,12 @@ class UserController {
             if (!User.comparePassword(password, user.password)) {
                 next(ApiError.BadRequest("Wrong password or login!"))
             }
-            res.json({ token: this.signJWT(user) });
+            res.json({ token: this.signJWT(user.id,user.email) });
         } catch (error) {
             next(error);
         }
     }
-    private signJWT({id,email}):string {
+    private signJWT(id:number,email:string):string {
         return jwt.sign({id,email},key,{expiresIn:'24h'})
     }
 }
