@@ -26,7 +26,7 @@ class TodoController {
         }
     }
 
-    delete=async(req:Request,res:Response,next:NextFunction){
+    delete=async(req:Request,res:Response,next:NextFunction)=>{
         try {
             const todoId:number=parseInt(req.params.id)
             const del=await deleteTodo(todoId)
