@@ -6,9 +6,14 @@ class Check{
                 
     }
 }
+function lol(par){
+    console.log(par);
+    
+}
 
+const obj={
+    kek:1,
+    lolypop:"shsh"
+}
+lol(obj)
 
-
-const kek=new Check()
-
-kek.print()

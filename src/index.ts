@@ -13,7 +13,7 @@ AppDataSource.initialize().then(async () => {
 
     // create express app
     const app = express()
-    app.use(bodyParser.json())
+    app.use(express.json())
     app.use('/api',indexRouter)
     // register express routes from defined application routes
     // Routes.forEach(route => {

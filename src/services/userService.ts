@@ -1,8 +1,9 @@
-import { Request } from "express";
+import { AppDataSource } from "../data-source";
+import { Todo } from "../entity/Todo";
+import { User } from "../entity/User";
 
-class UserService{
-    body:Request['body']
-    constructor(req:Request){
-        this.body=req.body
-    }    
-}
+const userRepository = AppDataSource.getRepository(User);
+
+export const findUserById = async (id: number) => {
+    return await userRepository.findOne({ where: { id } });
+};

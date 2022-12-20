@@ -1,10 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert } from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    BeforeInsert,
+    BaseEntity,
+} from "typeorm";
 import { Todo } from "./Todo";
 import * as bcrypt from "bcrypt";
 import { stringify } from "querystring";
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -16,7 +23,7 @@ export class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ select: false })
     password: string;
 
     @OneToMany(() => Todo, (todo) => todo.user)
@@ -24,12 +31,15 @@ export class User {
 
     @BeforeInsert()
     async hashPassword() {
-        
         this.password = await bcrypt.hash(this.password, 5);
     }
 
     static async comparePassword(candidatePassword: string, hashedPassword: string) {
-        
-        return await bcrypt.compare(candidatePassword, hashedPassword);
+        return await bcrypt.compare(candidatePassword, hashedPassword, (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+            return res;
+        });
     }
 }
